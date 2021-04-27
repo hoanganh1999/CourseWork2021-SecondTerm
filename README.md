@@ -1,6 +1,6 @@
 # CourseWork2021-SecondTerm
 
-## 13/11/2020
+## 3/3/2021
 Today I have made an attempt to create low poly water by code in unity, I started this by making a script(WaterPlaneGen) to create a plane that we can use to control the vertices and I also created a script called MakeSomeNoise, this script is the script that actually control the water and malipulate the vertices. When I was working on the first script which is the WaterPlaneGen I had encouter a problem that stopped my script from working. The problem was that in the GenerateMesh function, instead of writing "Vector3", I wrote "vector3" for all of them. Solve this problem I just went back and change the "vector3" to Vector3. I also change the line "var uvs = List<Vector3>();" to "var uvs = List<Vector2>();" this because uvs is a flat plane and it only has 2 values(x, z).
     
     private Mesh GenerateMesh()
@@ -11,8 +11,8 @@ Today I have made an attempt to create low poly water by code in unity, I starte
         var uvs = new List<Vector2>();  //only has 2 values (x, z)
 
 
-## 15/11/2020
-I have tried to generate a plane using code in unity, it was hard to learn and understand all the logic behind it. But at the end I managed to get it to work, I did this by splitting the plane into 2 seperate triangles. 
+## 5/3/2021
+I have tried to generate a plane using code in unity, it was hard to learn and understand all the logic and math behind it. But at the end I managed to get it to work, I did this by splitting the plane into 2 seperate triangles. 
 
         var triangles = new List<int>();
         var vertCount = gridSize + 1;
@@ -29,27 +29,12 @@ I have tried to generate a plane using code in unity, it was hard to learn and u
             
             
 
-## 16/11/2020
-I tried to implement the raycast method in my grappling hook/flying script and after a few tries, I manage to make it worked.  
+## 9/3/2021
+Today I tried to make the MakeSomeNoise script, I had a problem where I couldn't call the CalculateHeight function which was very confusing. This is because instead of CalculateHeight, I had it as claculateHeight. I fixed this problem by going back and change the line "float claculateHeight(float x, float y) to "float CalculateHeight(float x, float y). 
 
-IEnumerator Grapple1()
+    float CalculateHeight(float x, float y)
     {
-        
-        RaycastHit hit;
-        Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, grappleDistance);
-        if (hit.transform)
-        {
-            rb.useGravity = false;
-            Vector3 target = hit.transform.position;
-            movementScript.enabled = false;
-            rb.velocity = (target - transform.position) * grappleSpeed;
-        }
-        else
-        {
-            rb.useGravity = true;
-        }
-        yield return null;
-    }
+    
 
 ## 18/11/2020
 I tried to use raycast on my camera to make sure whenever the camera is behind the wall, the mesh of the wall would be turned off. it didn't work out because I put "payer" instead of "Player" in the code "if (hit.collider.gameObject.tag != "Player")".
