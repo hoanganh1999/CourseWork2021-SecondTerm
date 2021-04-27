@@ -1,18 +1,33 @@
 # CourseWork2021-SecondTerm
 
 ## 13/11/2020
-Today I have made an attempt to create low poly water by code in unity, I started this by making a script(WaterPlaneGen) to create a plane that we can use to control the vertices and I also created a script called MakeSomeNoise, this script is the script that actually control the water and malipulate the vertices. When I was working on the first script which is the WaterPlaneGen
+Today I have made an attempt to create low poly water by code in unity, I started this by making a script(WaterPlaneGen) to create a plane that we can use to control the vertices and I also created a script called MakeSomeNoise, this script is the script that actually control the water and malipulate the vertices. When I was working on the first script which is the WaterPlaneGen I had encouter a problem that stopped my script from working. The problem was that in the GenerateMesh function, instead of writing "Vector3", I wrote "vector3" for all of them. Solve this problem I just went back and change the "vector3" to Vector3. I also change the line "var uvs = List<Vector3>();" to "var uvs = List<Vector2>();" this because uvs is a flat plane and it only has 2 values(x, z).
+    
+    private Mesh GenerateMesh()
+    {
+        Mesh m = new Mesh();
+        var verticies = new List<Vector3>(); //stores x, y, z
+        var normals = new List<Vector3>();
+        var uvs = new List<Vector2>();  //only has 2 values (x, z)
+
 
 ## 15/11/2020
-I had a problem with my character when it doesn't move at all even when I presses the W, A, S, D keys. My character couldn't move because I didn't increase the value of the speed variable. I managed to fix this problem by going in the script and change the value of the speed variable after that my character was able to move.
+I have tried to generate a plane using code in unity, it was hard to learn and understand all the logic behind it. But at the end I managed to get it to work, I did this by splitting the plane into 2 seperate triangles. 
 
-using System.Collections;
-using UnityEngine;
-
-public class PlayerController : MonoBehaviour {
-
-    public float speed = 10f;
-    public float JumpSpeed = 5f;
+        var triangles = new List<int>();
+        var vertCount = gridSize + 1;
+        for (int i = 0; i < vertCount * vertCount - vertCount; i++)
+        {
+            if ((i + 1) % vertCount == 0)
+            {
+                continue;
+            }
+            triangles.AddRange(new List<int>() {
+                i+1+vertCount, i+vertCount, i,
+                i, i+1, i+vertCount+1
+            });
+            
+            
 
 ## 16/11/2020
 I tried to implement the raycast method in my grappling hook/flying script and after a few tries, I manage to make it worked.  
