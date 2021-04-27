@@ -115,7 +115,7 @@ Corrected code:
 
 
     
-## 24/3/2021
+## 26/3/2021
 I wanted to have a canvas that contained the instruction for the Moving Platform/Elevator that show up when the player touched the platform. I had some problems with trying tp make it working but after using the true and false statement I managed to make it work. I was pretty happy with the result.
 
 
@@ -143,7 +143,7 @@ I wanted to have a canvas that contained the instruction for the Moving Platform
         }
     }
 
-## 26/3/2021
+## 1/4/2021
 I had another problem while creating a jump pad. The problem was that the player wasn't able to bouce on the jump pad. This is because I added a Rigidbody in the jump pad object but I didn't refence the Rigidbody in the code. I fixed this problem by adding Rigidbody rb = bouncer.GetComponent<Rigidbody>(); in the OncollisionEnter function. 
     
     private void OncollisionEnter(Collision collision)
@@ -156,7 +156,7 @@ I had another problem while creating a jump pad. The problem was that the player
     }
 
 
-## 28/3/2021
+## 5/4/2021
 Today I encouterd a problem where my PickUp script didn't reset when the player died. This issue was very problematic because I when the player died and the game restarted, the player wouldn't be able to to press E to pick up the object or Q to drop the object again. I figured out a solution and mananed to fixed it by adding  "equipped = false;" and "slotFull = false;" at the Start function, this was to make sure that the code reset every time the game restart.
 
     private void Start()
@@ -180,7 +180,7 @@ Today I encouterd a problem where my PickUp script didn't reset when the player 
     }
 
 
-## 30/11/2020
+## 7/4/2021
 I have tried to figure out a way to make the pick up object as a child of the container object. It took me a long time but I made it work using the transform.SetParent, transform.localposition and trasnform.localScale.   
 
     private void PickUp()
@@ -200,8 +200,8 @@ I have tried to figure out a way to make the pick up object as a child of the co
 
     }
 
-## 2/12/2020
-I also wanted to make the character able to drop the object as well, I made this work adding a Drop function. I used the rb.AddForce method to make the player to throw the object when pressed Q. I also used "float random = Random.Range(-1f, 1f);" to make the player throw the object at random range as well.
+## 2/12/2021
+I also wanted make the character to be able to drop the object as well, I made this work by adding a Drop function. I used the rb.AddForce method to make the player to throw the object when pressed Q. I also used "float random = Random.Range(-1f, 1f);" to make the player throw the object at random range as well.
 
     private void Drop()
     {
@@ -225,27 +225,39 @@ I also wanted to make the character able to drop the object as well, I made this
     }
 
 
-## 3/11/2020
-I had another problem where the enemy didn't chase and attack the player when it was closed to the player instead it was just patrolling around that area. I fixed it by saying that whenever the playerDistance is smalled than 2f, the enemy will chase the player but if the playerDistance is more than 2f, the enemy will move to the next point.
+## 15/4/2021
+I wanted to get the Tornado to pull the player in slowly so I added a IEnumerator pullObject function. In this IEnumerator pullObject function, there was an if statement that when objects with tag player come close, it would pull that object in.  
 
-playerDistance = Vector3.Distance(player.position, transform.position);
-
-        if (playerDistance < awareAI)
+    IEnumerator pullObject(Collider x, bool shouldPull)
+    {
+        if (shouldPull)
         {
-            LookAtPlayer();
-            Debug.Log("Seen");
+            Vector3 ForeDir = tornadoCenter.position - x.transform.position;
+            x.GetComponent<Rigidbody>().AddForce(ForeDir.normalized * pullforce * Time.deltaTime);
+            yield return refreshRate;
+            StartCoroutine(pullObject(x, shouldPull));
         }
+    }
 
-        if (playerDistance < awareAI)
-        {
-            if (playerDistance > 2f)
-            chase();
-                else
-            GotoNextPoint();
-        }
 
 
 ## 4/12/2020
+Today I made an attemp to instantiate a particle effect whenever a bullet touched the target object. I did this by making a HitTarget function and in this function I added GameObject effectIns = (GameObject)Instantiate(impactEffect, transform.position, transform.rotation); to make this work.
 
-## 6/12/2020
-I tried to use true or false function to make my animation worked and after sometimes of trying to make it work, I managed to make the animation played whenever a key is pressed. It is better to map out which animation is supposed to play after each key is pressed before trying to make the script for the animation.
+    void HitTarget()
+    {
+        GameObject effectIns = (GameObject)Instantiate(impactEffect, transform.position, transform.rotation);
+        Destroy(effectIns, 2f);
+
+        Destroy(target.gameObject);
+
+        MyEnemies = GameObject.FindGameObjectWithTag("Soul");
+        DestroyObject(MyEnemies);
+
+        Destroy(this.gameObject);
+
+
+        Debug.Log("HITTING!");
+        Destroy(gameObject);
+    }
+
