@@ -55,13 +55,63 @@ public class PlayerMovement : MonoBehaviour
     CharacterController characterController;
 
     public float moveSpeed;
-    public float jumpSpeed;
-    public float gravity;
+    
+   
+
+## 19/3/2021
+The script of my character still didn't work the way that I want it to work, I wanted my character to be able to jump so I added the jumpSpeed and the gravity variables. I also added this line of code to the update function: 
+
+if (characterController.isGrounded && Input.GetButton("Jump"))
+            MoveVector.y = jumpSpeed;    
+            
+This line of code allows the character to jump whenever the CharacterController touches the ground.
+            
+
+## 22/3/2021
+I attemped to make my Moving Platform/Elevator package, but it didn't go very well for me. This is because when I tried to make the platform to move, it didn't move at all. this is because in my update function I failed to find reference the T and Y keys in the if statement. I wrote if (Input.GetKey (KeyCode.T) && hasRider) instead of if (Input.GetKeyDown (KeyCode.T) && hasRider). I fixed this problem by replacing GetKey with GetKeyDown.
+
+
+void Update()
+    {
+    
+        if (Input.GetKeyDown (KeyCode.T) && hasRider)
+        {
+            states = EleStates.goUP;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Y) && hasRider)
+        {
+            states = EleStates.goDown;
+        }
 
 
 
-## 23/11/2020
-I had a problem with my second tutorial which was my 2D Enemy AI Follow tutorial. The problem that I encountered was that the enemy wouldn't follow the player even when I tagged the player with the "Player" tag. The enemy didn't follow the player because in the script where it said target = "GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();" I wrote "player" instead of "Player". I fixed this by putting "Play" in the line "GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();"
+
+
+## 24/3/2021
+Today I was still working on my Moving Platform/Elevator package. I encoutered another problem where the player didn't stay on the moving platform when it moved. This was because if the second collider of the moving platform wasn't set to is Trigger and I didn't reference the player corretly because I said "if (coll.tag == "Object")" instead of "if (coll.tag == "Player")". I fixed the problem by setting the collider to is Trigger and corrected the code in both OnTriggerEnter and OntriggerExit.
+
+    void OnTriggerEnter(Collider coll)
+    {
+        if (coll.tag == "Player")
+        {
+            platformPanel.SetActive(true);
+            coll.transform.parent = gameObject.transform;
+            hasRider = true;
+        }
+    }
+
+    void OntriggerExit(Collider coll)
+    {
+        if (coll.tag == "Player")
+        {
+            platformPanel.SetActive(false);
+            coll.transform.parent = null;
+            hasRider = false;
+        }
+    }
+
+
     
 ## 24/11/20
 The problem that I encountered while making the script for my Shooting Enemy AI tutorial was that I couldn't get the enemy to shoot projectiles at the player, the enemy was creating projectiles but it didn't shoot at the player so what I did was making a new script for the projectile and told it to target the player by "player = GameObject.FindGameObjectWithTag("Player").transform;" 
