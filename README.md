@@ -89,13 +89,15 @@ void Update()
 
 
 ## 24/3/2021
-Today I was still working on my Moving Platform/Elevator package. I encoutered another problem where the player didn't stay on the moving platform when it moved. This was because if the second collider of the moving platform wasn't set to is Trigger and I didn't reference the player corretly because I said "if (coll.tag == "Object")" instead of "if (coll.tag == "Player")". I fixed the problem by setting the collider to is Trigger and corrected the code in both OnTriggerEnter and OntriggerExit.
+Today I was still working on my Moving Platform/Elevator package. I encoutered another problem where the player didn't stay on the moving platform when it moved. This was because if the second collider of the moving platform wasn't set to is Trigger and I didn't reference the player corretly because I said "if (coll.tag == "Object")" instead of "if (coll.tag == "Player")". I fixed the problem by setting the collider on my moving platform object to is Trigger and corrected the code in both OnTriggerEnter and OntriggerExit functions. I have learnt that tagging is very important in coding.
+
+Corrected code:
 
     void OnTriggerEnter(Collider coll)
     {
         if (coll.tag == "Player")
         {
-            platformPanel.SetActive(true);
+           
             coll.transform.parent = gameObject.transform;
             hasRider = true;
         }
@@ -105,7 +107,7 @@ Today I was still working on my Moving Platform/Elevator package. I encoutered a
     {
         if (coll.tag == "Player")
         {
-            platformPanel.SetActive(false);
+            
             coll.transform.parent = null;
             hasRider = false;
         }
@@ -113,77 +115,115 @@ Today I was still working on my Moving Platform/Elevator package. I encoutered a
 
 
     
-## 24/11/20
-The problem that I encountered while making the script for my Shooting Enemy AI tutorial was that I couldn't get the enemy to shoot projectiles at the player, the enemy was creating projectiles but it didn't shoot at the player so what I did was making a new script for the projectile and told it to target the player by "player = GameObject.FindGameObjectWithTag("Player").transform;" 
-
-## 26/11/20
-I had another problem where the projectile doesn't disappear when it collides with the player. I fixed this by saying that when whenever the projectile touches the object with tag "Player", it will destrory itself.
-
-void OntriggerEnter2D(Collider2D other) {
-
-    if (other.CompareTag("Player")){
-        DestroyProjectile();
-    }
-}
-
-## 28/11/2020
-I had an issue with the game for the coding model where I couldn't get my character to jump. I made this work by adding a game public called "groundcheck" and say that whenever the character reaches the ground it will be able to jump again.
+## 24/3/2021
+I wanted to have a canvas that contained the instruction for the Moving Platform/Elevator that show up when the player touched the platform. I had some problems with trying tp make it working but after using the true and false statement I managed to make it work. I was pretty happy with the result.
 
 
-grounded = Physics.Raycast(groundcheck.transform.position, Vector2.down, 0.1f, ground);
-
-        if (Input.GetAxis("Jump") != 0 && grounded == true)
+    void OnTriggerEnter(Collider coll)
+    {
+        if (coll.tag == "Player")
         {
-            rb.velocity = new Vector3(rb.velocity.x, JumpSpeed, rb.velocity.z);
+            platformPanel.SetActive(true);
             
+            coll.transform.parent = gameObject.transform;
+            
+            hasRider = true;
+        }
+    }
+
+    void OntriggerExit(Collider coll)
+    {
+        if (coll.tag == "Player")
+        {
+            platformPanel.SetActive(false);
+            
+            coll.transform.parent = null;
+            
+            hasRider = false;
+        }
+    }
+
+## 26/3/2021
+I had another problem while creating a jump pad. The problem was that the player wasn't able to bouce on the jump pad. This is because I added a Rigidbody in the jump pad object but I didn't refence the Rigidbody in the code. I fixed this problem by adding Rigidbody rb = bouncer.GetComponent<Rigidbody>(); in the OncollisionEnter function. 
+    
+    private void OncollisionEnter(Collision collision)
+    {
+        GameObject bouncer = collision.gameObject;
+        
+        Rigidbody rb = bouncer.GetComponent<Rigidbody>();
+        
+        rb.AddForce(Vector3.up * bounceDistance);
+    }
+
+
+## 28/3/2021
+Today I encouterd a problem where my PickUp script didn't reset when the player died. This issue was very problematic because I when the player died and the game restarted, the player wouldn't be able to to press E to pick up the object or Q to drop the object again. I figured out a solution and mananed to fixed it by adding  "equipped = false;" and "slotFull = false;" at the Start function, this was to make sure that the code reset every time the game restart.
+
+    private void Start()
+    {
+        equipped = false;
+        slotFull = false;
+
+        if (!equipped)
+        {
+            rb.isKinematic = false;
+            col.isTrigger = false;
+        }
+
+        if (equipped)
+        {
+            rb.isKinematic = true;
+            col.isTrigger = true;
+            slotFull = true;
+
         }
     }
 
 
 ## 30/11/2020
-I had another problem with my game where the camera was going through the wall whenever the character is near the wall, this caused the wall to block the view of the player. I managed to fix the problem by using raycast method and said that whenever the raycast hit the wall, the mesh of the wall would get disabled which allowed the player to see through the wall.
+I have tried to figure out a way to make the pick up object as a child of the container object. It took me a long time but I made it work using the transform.SetParent, transform.localposition and trasnform.localScale.   
 
-RaycastHit hit;
+    private void PickUp()
+    {
+        equipped = true;
+        slotFull = true;
 
-        if (Physics.Raycast(transform.position, Target.position - transform.position, out hit, 4.5f))
-        {
-            if (hit.collider.gameObject.tag != "Player")
-            {
-                Obstruction = hit.transform;
-                Obstruction.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+        transform.SetParent(container);
+        transform.localPosition = Vector3.zero;
+        transform.localRotation = Quaternion.Euler(Vector3.zero);
+        transform.localScale = Vector3.one;
 
-                if (Vector3.Distance(Obstruction.position, transform.position) >= 3f && Vector3.Distance(transform.position, Target.position) >= 1.5f)
-                {
-                    transform.Translate(Vector3.forward * zoomSpeed * Time.deltaTime);
-                }
 
-            }
-            else
-            {
-                Obstruction.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-                if (Vector3.Distance(transform.position, Target.position) < 4.5f)
-                {
-                    transform.Translate(Vector3.back * zoomSpeed * Time.deltaTime);
-                }
-            }
-        }
+        rb.isKinematic = true;
+
+        col.isTrigger = true;
+
     }
 
 ## 2/12/2020
-I encountered another problem where the player would clip through objects whenever they tried to fly toward the object, this problem is in my grappling hook/flying script. I fixed this problem by problem by going in my script and change the value of of the grapplespeed variable from 10.0f to 6.8f, this stopped the character from going through the wall or any other objects.
+I also wanted to make the character able to drop the object as well, I made this work adding a Drop function. I used the rb.AddForce method to make the player to throw the object when pressed Q. I also used "float random = Random.Range(-1f, 1f);" to make the player throw the object at random range as well.
 
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+    private void Drop()
+    {
+        equipped = false;
+        slotFull = false;
 
-public class GrappleHook : MonoBehaviour
-{
+        transform.SetParent(null);
 
-     private Rigidbody rb;
-     public float speed;
-     private PlayerController movementScript;
-     public float grappleDistance;
-     public float grappleSpeed = 6.8f;
+
+        rb.isKinematic = false;
+
+        col.isTrigger = false;
+
+        rb.velocity = player.GetComponent<Rigidbody>().velocity;
+
+        rb.AddForce(cam.forward * dropForwardForce, ForceMode.Impulse);
+        rb.AddForce(cam.up * dropUpwardForce, ForceMode.Impulse);
+
+        float random = Random.Range(-1f, 1f);
+        rb.AddTorque(new Vector3(random, random, random) * 10);
+    }
+
 
 ## 3/11/2020
 I had another problem where the enemy didn't chase and attack the player when it was closed to the player instead it was just patrolling around that area. I fixed it by saying that whenever the playerDistance is smalled than 2f, the enemy will chase the player but if the playerDistance is more than 2f, the enemy will move to the next point.
@@ -206,20 +246,6 @@ playerDistance = Vector3.Distance(player.position, transform.position);
 
 
 ## 4/12/2020
-I tried to fix the problem with the UI of coins where the UI doesn't change even if the character had collected all the coins in the map, the number of coins would just stay at 1 and it wouldn't go to 0. I managed to fix this problem by going in my gameManagerScript and say that if the number of coins is less than or equal to 0 the UI will change.
 
-public void UpdateUI() 
-    {
-        
-        if (cur_coins > 0) 
-        {
-            coinsLeft.text = "coin Left: " + cur_coins.ToString("D1") + "/" + max_coins.ToString("D1");
-        } else if (cur_coins <= 0) {
-            coinsLeft.text = "coin Left: " + cur_coins.ToString("D1") + "/" + max_coins.ToString("D1");
-            Door.SetActive (true);
-        }
-       
-    }
- 
 ## 6/12/2020
 I tried to use true or false function to make my animation worked and after sometimes of trying to make it work, I managed to make the animation played whenever a key is pressed. It is better to map out which animation is supposed to play after each key is pressed before trying to make the script for the animation.
