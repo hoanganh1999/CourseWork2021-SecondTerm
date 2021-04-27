@@ -200,7 +200,7 @@ I have tried to figure out a way to make the pick up object as a child of the co
 
     }
 
-## 2/12/2021
+## 12/4/2021
 I also wanted make the character to be able to drop the object as well, I made this work by adding a Drop function. I used the rb.AddForce method to make the player to throw the object when pressed Q. I also used "float random = Random.Range(-1f, 1f);" to make the player throw the object at random range as well.
 
     private void Drop()
@@ -241,7 +241,7 @@ I wanted to get the Tornado to pull the player in slowly so I added a IEnumerato
 
 
 
-## 4/12/2020
+## 18/4/2020
 Today I made an attemp to instantiate a particle effect whenever a bullet touched the target object. I did this by making a HitTarget function and in this function I added GameObject effectIns = (GameObject)Instantiate(impactEffect, transform.position, transform.rotation); to make this work.
 
     void HitTarget()
