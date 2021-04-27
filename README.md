@@ -1,4 +1,4 @@
-# CourseWork2021-SecondTerm
+# Learning Journal-SecondTerm
 
 ## 3/3/2021
 Today I have made an attempt to create low poly water by code in unity, I started this by making a script(WaterPlaneGen) to create a plane that we can use to control the vertices and I also created a script called MakeSomeNoise, this script is the script that actually control the water and malipulate the vertices. When I was working on the first script which is the WaterPlaneGen I had encouter a problem that stopped my script from working. The problem was that in the GenerateMesh function, instead of writing "Vector3", I wrote "vector3" for all of them. Solve this problem I just went back and change the "vector3" to Vector3. I also change the line "var uvs = List<Vector3>();" to "var uvs = List<Vector2>();" this because uvs is a flat plane and it only has 2 values(x, z).
