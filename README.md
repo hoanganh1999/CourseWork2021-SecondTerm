@@ -1,12 +1,7 @@
 # CourseWork2021-SecondTerm
-## 10/11/2020
-I have learned how to create a repository
-
-## 12/11/2020
-I have learned how to use "#" to highlight what is important in the readme file.
 
 ## 13/11/2020
-I started to learn how to use raycast to detect object because I needed to use this for my grappling hook/flying script. I found that raycast needed collider to work.
+Today I have made an attempt to create low poly water by code in unity, I started this by making a script(WaterPlaneGen) to create a plane that we can use to control the vertices and I also created a script called MakeSomeNoise, this script is the script that actually control the water and malipulate the vertices. When I was working on the first script which is the WaterPlaneGen
 
 ## 15/11/2020
 I had a problem with my character when it doesn't move at all even when I presses the W, A, S, D keys. My character couldn't move because I didn't increase the value of the speed variable. I managed to fix this problem by going in the script and change the value of the speed variable after that my character was able to move.
