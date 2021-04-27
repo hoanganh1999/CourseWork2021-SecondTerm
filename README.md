@@ -30,33 +30,35 @@ I have tried to generate a plane using code in unity, it was hard to learn and u
             
 
 ## 9/3/2021
-Today I tried to make the MakeSomeNoise script, I had a problem where I couldn't call the CalculateHeight function which was very confusing. This is because instead of CalculateHeight, I had it as claculateHeight. I fixed this problem by going back and change the line "float claculateHeight(float x, float y) to "float CalculateHeight(float x, float y). 
+Today I tried to make the MakeSomeNoise script, I had a problem where I couldn't call the CalculateHeight function which was very confusing. This was because instead of CalculateHeight, I had it as claculateHeight. I fixed this problem by going back and change the line "float claculateHeight(float x, float y) to "float CalculateHeight(float x, float y). 
 
     float CalculateHeight(float x, float y)
     {
     
 
-## 18/11/2020
-I tried to use raycast on my camera to make sure whenever the camera is behind the wall, the mesh of the wall would be turned off. it didn't work out because I put "payer" instead of "Player" in the code "if (hit.collider.gameObject.tag != "Player")".
+## 13/3/2021
+I managed to finish both scripts(MakeSomeNoise,WaterPlaneGen), I tried to put in work together in unity, but it didn't work at first and it gave me a red error. This was because I didn't add a Mesh Filter component and a Mesh Renderer component. I managed to fix this error by adding these 2 components in my empty object.
 
-## 20/11/2020
-I had a problem when I was making my first tutorial which was the 2D Top Down Player Control Tutorial. The problem was that I made a variable for the rigidbody 2D but I didn't put a rigidbody on the player character and this stopped my game from working. I fixed this problem by adding a rigidbody 2D onto the player character.
+
+
+## 15/3/2021
+I had a problem when I was making my first package which was the Character Movement package. The problem was that I made a variable for the Character Controller but I didn't add a Character Controller to the object and it didn't let me start the game when I clicked play. I fixed this problem by adding a Character Controller to the game object.
 
 using System.Collections;
-
 using System.Collections.Generic;
-
-using System.Runtime.CompilerServices;
-
 using UnityEngine;
 
-public class PlayController : MonoBehaviour {
+public class PlayerMovement : MonoBehaviour
+{
 
-     public float speed;
+    Vector3 MoveVector = Vector3.zero;
+    CharacterController characterController;
 
-     private Rigidbody2D rb;
+    public float moveSpeed;
+    public float jumpSpeed;
+    public float gravity;
 
-     private Vector2 moveVelocity;
+
 
 ## 23/11/2020
 I had a problem with my second tutorial which was my 2D Enemy AI Follow tutorial. The problem that I encountered was that the enemy wouldn't follow the player even when I tagged the player with the "Player" tag. The enemy didn't follow the player because in the script where it said target = "GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();" I wrote "player" instead of "Player". I fixed this by putting "Play" in the line "GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();"
