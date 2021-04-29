@@ -241,7 +241,7 @@ I wanted to get the Tornado to pull the player in slowly so I added a IEnumerato
 
 
 
-## 18/4/2020
+## 18/4/2021
 Today I made an attemp to instantiate a particle effect whenever a bullet touched the target object. I did this by making a HitTarget function and in this function I added GameObject effectIns = (GameObject)Instantiate(impactEffect, transform.position, transform.rotation); to make this work.
 
     void HitTarget()
