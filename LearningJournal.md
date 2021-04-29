@@ -1,7 +1,7 @@
 # Learning Journal-SecondTerm
 
 ## 3/3/2021
-Today I have made an attempt to create low poly water by code in unity, I started this by making a script(WaterPlaneGen) to create a plane that we can use to control the vertices and I also created a script called MakeSomeNoise, this script is the script that actually control the water and malipulate the vertices. When I was working on the first script which is the WaterPlaneGen I had encouter a problem that stopped my script from working. The problem was that in the GenerateMesh function, instead of writing "Vector3", I wrote "vector3" for all of them. Solve this problem I just went back and change the "vector3" to Vector3. I also change the line "var uvs = List<Vector3>();" to "var uvs = List<Vector2>();" this because uvs is a flat plane and it only has 2 values(x, z).
+Today I have made an attempt to create low poly water by code in unity, I started this by making a script(WaterPlaneGen) to create a plane that we can use to control the vertices and I also created a script called MakeSomeNoise, this script is the script that controls the water and manipulates the vertices. When I was working on the first script which is the WaterPlaneGen I had encountered a problem that stopped my script from working. The problem was that in the GenerateMesh function, instead of writing "Vector3", I wrote "vector3" for all of them. Solve this problem I just went back and change the "vector3" to Vector3. I also change the line "var uvs = List<Vector3>();" to "var uvs = List<Vector2>();" this because uvs is a flat plane and it only has 2 values(x, z).
     
     private Mesh GenerateMesh()
     {
@@ -12,7 +12,7 @@ Today I have made an attempt to create low poly water by code in unity, I starte
 
 
 ## 5/3/2021
-I have tried to generate a plane using code in unity, it was hard to learn and understand all the logic and math behind it. But at the end I managed to get it to work, I did this by splitting the plane into 2 seperate triangles. 
+I have tried to generate a plane using code in unity, it was hard to learn and understand all the logic and math behind it. But in the end, I managed to get it to work, I did this by splitting the plane into 2 separate triangles. 
 
         var triangles = new List<int>();
         var vertCount = gridSize + 1;
@@ -37,9 +37,7 @@ Today I tried to make the MakeSomeNoise script, I had a problem where I couldn't
     
 
 ## 13/3/2021
-I managed to finish both scripts(MakeSomeNoise,WaterPlaneGen), I tried to put in work together in unity, but it didn't work at first and it gave me a red error. This was because I didn't add a Mesh Filter component and a Mesh Renderer component. I managed to fix this error by adding these 2 components in my empty object.
-
-
+I managed to finish both scripts(MakeSomeNoise,WaterPlaneGen), I tried to put in work together in unity, but it didn't work at first and it gave me a red error. This was because I didn't add a Mesh Filter component and a Mesh Renderer component. I managed to fix this error by adding these 2 components to my empty object.
 
 ## 15/3/2021
 I had a problem when I was making my first package which was the Character Movement package. The problem was that I made a variable for the Character Controller but I didn't add a Character Controller to the object and it didn't let me start the game when I clicked play. I fixed this problem by adding a Character Controller to the game object.
@@ -68,7 +66,7 @@ This line of code allows the character to jump whenever the CharacterController 
             
 
 ## 22/3/2021
-I attemped to make my Moving Platform/Elevator package, but it didn't go very well for me. This is because when I tried to make the platform to move, it didn't move at all. this is because in my update function I failed to find reference the T and Y keys in the if statement. I wrote if (Input.GetKey (KeyCode.T) && hasRider) instead of if (Input.GetKeyDown (KeyCode.T) && hasRider). I fixed this problem by replacing GetKey with GetKeyDown.
+I attempted to make my Moving Platform/Elevator package, but it didn't go very well for me. This is because when I tried to make the platform move, it didn't move at all. this is because in my update function I failed to find reference the T and Y keys in the if statement. I wrote if (Input.GetKey (KeyCode.T) && hasRider) instead of if (Input.GetKeyDown (KeyCode.T) && hasRider). I fixed this problem by replacing GetKey with GetKeyDown.
 
 
 void Update()
@@ -89,7 +87,7 @@ void Update()
 
 
 ## 24/3/2021
-Today I was still working on my Moving Platform/Elevator package. I encoutered another problem where the player didn't stay on the moving platform when it moved. This was because if the second collider of the moving platform wasn't set to is Trigger and I didn't reference the player corretly because I said "if (coll.tag == "Object")" instead of "if (coll.tag == "Player")". I fixed the problem by setting the collider on my moving platform object to is Trigger and corrected the code in both OnTriggerEnter and OntriggerExit functions. I have learnt that tagging is very important in coding.
+Today I was still working on my Moving Platform/Elevator package. I encountered another problem where the player didn't stay on the moving platform when it moved. This was because if the second collider of the moving platform wasn't set to is Trigger and I didn't reference the player correctly because I said "if (coll.tag == "Object")" instead of "if (coll.tag == "Player")". I fixed the problem by setting the collider on my moving platform object to is Trigger and corrected the code in both OnTriggerEnter and OntriggerExit functions. I have learnt that tagging is very important in coding.
 
 Corrected code:
 
@@ -116,8 +114,7 @@ Corrected code:
 
     
 ## 26/3/2021
-I wanted to have a canvas that contained the instruction for the Moving Platform/Elevator that show up when the player touched the platform. I had some problems with trying tp make it working but after using the true and false statement I managed to make it work. I was pretty happy with the result.
-
+I wanted to have a canvas that contained the instruction for the Moving Platform/Elevator that show up when the player touched the platform. I had some problems with trying to make it work but after using the true and false statement I managed to make it work. I was pretty happy with the result.
 
     void OnTriggerEnter(Collider coll)
     {
@@ -144,7 +141,8 @@ I wanted to have a canvas that contained the instruction for the Moving Platform
     }
 
 ## 1/4/2021
-I had another problem while creating a jump pad. The problem was that the player wasn't able to bouce on the jump pad. This is because I added a Rigidbody in the jump pad object but I didn't refence the Rigidbody in the code. I fixed this problem by adding Rigidbody rb = bouncer.GetComponent<Rigidbody>(); in the OncollisionEnter function. 
+I had another problem while creating a jump pad. The problem was that the player wasn't able to bounce on the jump pad. This is because I added a Rigidbody in the jump pad object but I didn't reference the Rigidbody in the code. I fixed this problem by adding Rigidbody rb = bouncer.GetComponent<Rigidbody>(); in the OncollisionEnter function. 
+
     
     private void OncollisionEnter(Collision collision)
     {
@@ -157,7 +155,8 @@ I had another problem while creating a jump pad. The problem was that the player
 
 
 ## 5/4/2021
-Today I encouterd a problem where my PickUp script didn't reset when the player died. This issue was very problematic because I when the player died and the game restarted, the player wouldn't be able to to press E to pick up the object or Q to drop the object again. I figured out a solution and mananed to fixed it by adding  "equipped = false;" and "slotFull = false;" at the Start function, this was to make sure that the code reset every time the game restart.
+Today I encountered a problem where my PickUp script didn't reset when the player died. This issue was very problematic because when the player died and the game restarted, the player wouldn't be able to press E to pick up the object or Q to drop the object again. I figured out a solution and managed to fix it by adding  "equipped = false;" and "slotFull = false;" at the Start function, this was to make sure that the code reset every time the game restart.
+
 
     private void Start()
     {
@@ -181,7 +180,7 @@ Today I encouterd a problem where my PickUp script didn't reset when the player 
 
 
 ## 7/4/2021
-I have tried to figure out a way to make the pick up object as a child of the container object. It took me a long time but I made it work using the transform.SetParent, transform.localposition and trasnform.localScale.   
+I have tried to figure out a way to make the pickup object as a child of the container object. It took me a long time but I made it work using the transform.SetParent, transform.localposition and trasnform.localScale.   
 
     private void PickUp()
     {
@@ -201,7 +200,7 @@ I have tried to figure out a way to make the pick up object as a child of the co
     }
 
 ## 12/4/2021
-I also wanted make the character to be able to drop the object as well, I made this work by adding a Drop function. I used the rb.AddForce method to make the player to throw the object when pressed Q. I also used "float random = Random.Range(-1f, 1f);" to make the player throw the object at random range as well.
+I also wanted to make the character to be able to drop the object as well, I made this work by adding a Drop function. I used the rb.AddForce method to make the player throw the object when pressed Q. I also used "float random = Random.Range(-1f, 1f);" to make the player throw the object at random range as well.
 
     private void Drop()
     {
@@ -226,7 +225,7 @@ I also wanted make the character to be able to drop the object as well, I made t
 
 
 ## 15/4/2021
-I wanted to get the Tornado to pull the player in slowly so I added a IEnumerator pullObject function. In this IEnumerator pullObject function, there was an if statement that when objects with tag player come close, it would pull that object in.  
+I wanted to get the Tornado to pull the player in slowly so I added an IEnumerator pullObject function. In this IEnumerator pullObject function, there was an if statement that when objects with tag player come close, it would pull that object in.  
 
     IEnumerator pullObject(Collider x, bool shouldPull)
     {
@@ -242,7 +241,7 @@ I wanted to get the Tornado to pull the player in slowly so I added a IEnumerato
 
 
 ## 18/4/2021
-Today I made an attemp to instantiate a particle effect whenever a bullet touched the target object. I did this by making a HitTarget function and in this function I added GameObject effectIns = (GameObject)Instantiate(impactEffect, transform.position, transform.rotation); to make this work.
+Today I attempted to instantiate a particle effect whenever a bullet touched the target object. I did this by making a HitTarget function and in this function I added GameObject effectIns = (GameObject)Instantiate(impactEffect, transform.position, transform.rotation); to make this work.
 
     void HitTarget()
     {
